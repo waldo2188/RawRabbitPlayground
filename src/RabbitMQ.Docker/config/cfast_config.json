@@ -1,0 +1,115 @@
+{
+    "rabbit_version": "3.7.16",
+    "users": [
+      {
+        "name": "Sender",
+        "password_hash": "t6weYQG1zvfRjadi841P4PLIT8P/8+YvuNKNDOF4rzXyOAFb",
+        "hashing_algorithm": "rabbit_password_hashing_sha256",
+        "tags": "email"
+      },
+      {
+          "name": "admin",
+          "password_hash": "/6VYiMiM++lyY9a4frdG1X6ZbGGvlhMZF7aNiIAR6bytw0Pjo8CHJ6en45g9/PgJWm1LR5GlQpjuLjTHh0otc/1CpTo=",
+          "hashing_algorithm": "rabbit_password_hashing_sha512",
+          "tags": "administrator"
+      },
+      {
+        "name": "Listner",
+        "password_hash": "FX4IHf5yDKaUaDHxzuDjkAG+LkVwpyuBYtr/OEBw1inVScjI",
+        "hashing_algorithm": "rabbit_password_hashing_sha256",
+        "tags": "email"
+      }
+    ],
+    "vhosts": [
+        {
+            "name": "emailing"
+        },
+        {
+            "name": "/"
+        }
+    ],
+    "permissions": [
+        {
+            "user": "admin",
+            "vhost": "emailing",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+      {
+        "user": "Listner",
+        "vhost": "emailing",
+        "configure": "^(retry_for_e-emailing_in_(.*)_ms|default_error_exchange|default_retry_later_exchange|e-emailing|q-email_(low|high)_priority)$",
+        "write": "^(retry_for_e-emailing_in_(.*)_ms|default_error_exchange|default_retry_later_exchange|e-emailing|q-email_(low|high)_priority)$",
+        "read": "^(retry_for_e-emailing_in_(.*)_ms|default_error_exchange|default_retry_later_exchange|e-emailing|q-email_(low|high)_priority)$"
+      },
+        {
+            "user": "admin",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "Sender",
+            "vhost": "emailing",
+            "configure": "^(e-emailing|q-email_(low|high)_priority)$",
+            "write": "^(e-emailing|q-email_(low|high)_priority)$",
+            "read": "^$"
+        }
+    ],
+    "topic_permissions": [],
+    "parameters": [],
+    "global_parameters": [
+        {
+            "name": "cluster_name",
+            "value": "rabbit@d0af4e710e32"
+        }
+    ],
+    "policies": [],
+    "queues": [
+        {
+            "name": "q-email_low_priority",
+            "vhost": "emailing",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "q-email_high_priority",
+            "vhost": "emailing",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        }
+    ],
+    "exchanges": [
+        {
+            "name": "e-emailing",
+            "vhost": "emailing",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        }
+    ],
+    "bindings": [
+        {
+            "source": "e-emailing",
+            "vhost": "emailing",
+            "destination": "q-email_high_priority",
+            "destination_type": "queue",
+            "routing_key": "email_high_priority",
+            "arguments": {}
+        },
+        {
+            "source": "e-emailing",
+            "vhost": "emailing",
+            "destination": "q-email_low_priority",
+            "destination_type": "queue",
+            "routing_key": "email_low_priority",
+            "arguments": {}
+        }
+    ]
+}

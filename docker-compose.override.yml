@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+
+  rabbitmqlistner:
+    networks:
+      - my-network
+
+  rabbitmqsender:
+    networks:
+      - my-network
+
+  rabbitmq:
+    container_name: rabbitmq
+    build:
+      context: ./src/RabbitMQ.Docker/
+      dockerfile: Dockerfile
+    image: myrabbitmq
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - my-network
+
+volumes:
+  rabbitmq_data:
+    driver: local

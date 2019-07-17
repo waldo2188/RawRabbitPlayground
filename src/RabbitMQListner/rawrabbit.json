@@ -1,0 +1,25 @@
+﻿{
+  "Username": "Listner",
+  "Password": "Listner",
+  "VirtualHost": "emailing",
+  "Port": 5672,
+  "Hostnames": [ "rabbitmq" ],
+  "RequestTimeout": "00:00:15",
+  "PublishConfirmTimeout": "00:00:01",
+  "RecoveryInterval": "00:00:10",
+  "PersistentDeliveryMode": true,
+  "AutoCloseConnection": true,
+  "AutomaticRecovery": true,
+  "TopologyRecovery": true,
+  "RouteWithGlobalId": false,
+  "Exchange": {
+    "Durable": true,
+    "AutoDelete": false,
+    "Type": "direct"
+  },
+  "Queue": {
+    "AutoDelete": false,
+    "Durable": true,
+    "Exclusive": false
+  }
+}

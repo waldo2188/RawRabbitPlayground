@@ -1,0 +1,12 @@
+.vs/
+**/bin/
+**/obj/
+/test/**/Coverage/
+/test/**/Coverage.xml
+/Coverage/
+Coverage.xml
+**/vars/logs/
+publish/
+nupkgs/
+/src/Emailing.API/Views/*
+**/project.lock.json
